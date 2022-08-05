@@ -1,8 +1,8 @@
 import { useMemo } from "react";
 import { FlatList, Image } from "react-native";
 import clipboard from "~/assets/clipboard.png";
+import { CreateTaskBar } from "~/components/CreateTaskBar";
 import { Header } from "~/components/Header";
-import { SearchBar } from "~/components/SearchBar";
 import { TaskItem } from "~/components/TaskItem";
 import { useTasksContext } from "~/contexts/TasksContext";
 import {
@@ -32,7 +32,7 @@ export const Home: React.FC = () => {
       <Header />
 
       <Content>
-        <SearchBar />
+        <CreateTaskBar />
 
         <Tasks>
           <TasksHeader>

@@ -4,7 +4,7 @@ import { Alert } from "react-native";
 import { useTasksContext } from "~/contexts/TasksContext";
 import { AddButton, Container, Input } from "./styles";
 
-export const SearchBar: React.FC = () => {
+export const CreateTaskBar: React.FC = () => {
   const [isFocused, setIsFocused] = useState(false);
   const [newTask, setNewTask] = useState("");
   const { createTask } = useTasksContext();
