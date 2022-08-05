@@ -8,20 +8,28 @@ export const Container = styled.View`
   margin-top: -27px;
 `;
 
+interface InputProps {
+  isFocused: boolean;
+}
+
 export const Input = styled(TextInput).attrs(({ theme }): TextInputProps => {
   return {
     placeholderTextColor: theme.colors.gray[300],
   };
-})`
+})<InputProps>`
   flex: 1;
   font-size: 16px;
   padding: 16px;
   border-radius: 6px;
+  border: 1px solid;
 
-  ${({ theme }) => css`
+  ${({ theme, isFocused }) => css`
     background-color: ${theme.colors.gray[500]};
     color: ${theme.colors.gray[100]};
     font-family: ${theme.fonts.primary[400]};
+    border-color: ${isFocused
+      ? theme.colors.purple.dark
+      : theme.colors.gray[500]};
   `}
 `;
 
