@@ -2,21 +2,10 @@ import { Inter_400Regular, Inter_700Bold } from "@expo-google-fonts/inter";
 import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { Fragment, useCallback, useEffect, useState } from "react";
-import { StatusBar, StyleSheet, Text, View } from "react-native";
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#121015",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 36,
-    color: "white",
-    fontFamily: "Inter_700Bold",
-  },
-});
+import { StatusBar, View } from "react-native";
+import { ThemeProvider } from "styled-components/native";
+import { Home } from "~/screens/Home";
+import { theme } from "~/styles/theme";
 
 const App: React.FC = () => {
   const [appIsReady, setAppIsReady] = useState(false);
@@ -40,7 +29,7 @@ const App: React.FC = () => {
     prepare();
   }, []);
 
-  const onLayoutRootView = useCallback(async () => {
+  const handleLayoutRootView = useCallback(async () => {
     if (appIsReady) {
       await SplashScreen.hideAsync();
     }
@@ -58,9 +47,11 @@ const App: React.FC = () => {
         translucent
       />
 
-      <View style={styles.container} onLayout={onLayoutRootView}>
-        <Text style={styles.title}>Hello World</Text>
-      </View>
+      <ThemeProvider theme={theme}>
+        <View onLayout={handleLayoutRootView} style={{ flex: 1 }}>
+          <Home />
+        </View>
+      </ThemeProvider>
     </Fragment>
   );
 };
