@@ -4,6 +4,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { Fragment, useCallback, useEffect, useState } from "react";
 import { StatusBar, View } from "react-native";
 import { ThemeProvider } from "styled-components/native";
+import { TasksContextProvider } from "~/contexts/TasksContext";
 import { Home } from "~/screens/Home";
 import { theme } from "~/styles/theme";
 
@@ -49,7 +50,9 @@ const App: React.FC = () => {
 
       <ThemeProvider theme={theme}>
         <View onLayout={handleLayoutRootView} style={{ flex: 1 }}>
-          <Home />
+          <TasksContextProvider>
+            <Home />
+          </TasksContextProvider>
         </View>
       </ThemeProvider>
     </Fragment>

@@ -1,9 +1,10 @@
-import { Fragment } from "react";
-import { Image } from "react-native";
+import { useMemo } from "react";
+import { FlatList, Image } from "react-native";
 import clipboard from "~/assets/clipboard.png";
 import { Header } from "~/components/Header";
 import { SearchBar } from "~/components/SearchBar";
 import { TaskItem } from "~/components/TaskItem";
+import { useTasksContext } from "~/contexts/TasksContext";
 import {
   CompletedTasksTitle,
   Container,
@@ -19,56 +20,59 @@ import {
   TasksHeaderGroup,
 } from "./styles";
 
-const tasks = [""];
+export const Home: React.FC = () => {
+  const { tasks } = useTasksContext();
 
-export const Home: React.FC = () => (
-  <Container>
-    <Header />
+  const completedTasksAmount = useMemo(() => {
+    return tasks.filter(task => task.completed).length;
+  }, [tasks]);
 
-    <Content>
-      <SearchBar />
+  return (
+    <Container>
+      <Header />
 
-      <Tasks>
-        <TasksHeader>
-          <TasksHeaderGroup>
-            <CreatedTasksTitle>Criadas</CreatedTasksTitle>
-            <TasksHeaderBadge>
-              <TasksHeaderAmount>0</TasksHeaderAmount>
-            </TasksHeaderBadge>
-          </TasksHeaderGroup>
+      <Content>
+        <SearchBar />
 
-          <TasksHeaderGroup>
-            <CompletedTasksTitle>Concluídas</CompletedTasksTitle>
-            <TasksHeaderBadge>
-              <TasksHeaderAmount>0</TasksHeaderAmount>
-            </TasksHeaderBadge>
-          </TasksHeaderGroup>
-        </TasksHeader>
+        <Tasks>
+          <TasksHeader>
+            <TasksHeaderGroup>
+              <CreatedTasksTitle>Criadas</CreatedTasksTitle>
+              <TasksHeaderBadge>
+                <TasksHeaderAmount>{tasks.length}</TasksHeaderAmount>
+              </TasksHeaderBadge>
+            </TasksHeaderGroup>
 
-        {tasks.length ? (
-          <Fragment>
-            <TaskItem
-              completed={false}
-              title="Integer urna interdum massa libero auctor neque turpis turpis semper."
-            />
+            <TasksHeaderGroup>
+              <CompletedTasksTitle>Concluídas</CompletedTasksTitle>
+              <TasksHeaderBadge>
+                <TasksHeaderAmount>{completedTasksAmount}</TasksHeaderAmount>
+              </TasksHeaderBadge>
+            </TasksHeaderGroup>
+          </TasksHeader>
 
-            <TaskItem
-              completed={true}
-              title="Integer urna interdum massa libero auctor neque turpis turpis semper."
-            />
-          </Fragment>
-        ) : (
-          <NoTasks>
-            <Image source={clipboard} />
+          <FlatList
+            data={tasks}
+            keyExtractor={task => task.id}
+            renderItem={({ item }) => <TaskItem task={item} />}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ paddingBottom: 12 }}
+            ListEmptyComponent={() => (
+              <NoTasks>
+                <Image source={clipboard} />
 
-            <NoTasksTitle>Você ainda não tem tarefas cadastradas</NoTasksTitle>
+                <NoTasksTitle>
+                  Você ainda não tem tarefas cadastradas
+                </NoTasksTitle>
 
-            <NoTasksSubTitle>
-              Crie tarefas e organize seus itens a fazer
-            </NoTasksSubTitle>
-          </NoTasks>
-        )}
-      </Tasks>
-    </Content>
-  </Container>
-);
+                <NoTasksSubTitle>
+                  Crie tarefas e organize seus itens a fazer
+                </NoTasksSubTitle>
+              </NoTasks>
+            )}
+          />
+        </Tasks>
+      </Content>
+    </Container>
+  );
+};
