@@ -25,4 +25,4 @@ export const theme = {
       700: "Inter_700Bold",
     },
   },
-};
+} as const;
