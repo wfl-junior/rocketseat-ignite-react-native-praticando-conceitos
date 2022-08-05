@@ -1,7 +1,8 @@
-import { Container, Title } from "./styles";
+import { Header } from "~/components/Header";
+import { Container } from "./styles";
 
 export const Home: React.FC = () => (
   <Container>
-    <Title>Hello World</Title>
+    <Header />
   </Container>
 );
