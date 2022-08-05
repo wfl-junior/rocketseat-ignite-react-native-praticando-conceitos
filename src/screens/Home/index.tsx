@@ -1,3 +1,5 @@
+import { Image } from "react-native";
+import clipboard from "~/assets/clipboard.png";
 import { Header } from "~/components/Header";
 import { SearchBar } from "~/components/SearchBar";
 import {
@@ -5,6 +7,9 @@ import {
   Container,
   Content,
   CreatedTasksTitle,
+  NoTasks,
+  NoTasksSubTitle,
+  NoTasksTitle,
   Tasks,
   TasksHeader,
   TasksHeaderAmount,
@@ -35,6 +40,16 @@ export const Home: React.FC = () => (
             </TasksHeaderBadge>
           </TasksHeaderGroup>
         </TasksHeader>
+
+        <NoTasks>
+          <Image source={clipboard} />
+
+          <NoTasksTitle>Você ainda não tem tarefas cadastradas</NoTasksTitle>
+
+          <NoTasksSubTitle>
+            Crie tarefas e organize seus itens a fazer
+          </NoTasksSubTitle>
+        </NoTasks>
       </Tasks>
     </Content>
   </Container>

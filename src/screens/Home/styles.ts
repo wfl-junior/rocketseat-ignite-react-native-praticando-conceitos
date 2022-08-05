@@ -16,6 +16,7 @@ export const Tasks = styled.View`
 `;
 
 export const TasksHeader = styled.View`
+  margin-bottom: 20px;
   width: 100%;
   flex-direction: row;
   align-items: center;
@@ -58,5 +59,34 @@ export const CompletedTasksTitle = styled.Text`
   ${({ theme }) => css`
     color: ${theme.colors.purple.light};
     font-family: ${theme.fonts.primary[700]};
+  `}
+`;
+
+export const NoTasks = styled.View`
+  padding: 48px 20px;
+  align-items: center;
+  border-style: solid;
+  border-top-width: 1px;
+  border-top-color: ${({ theme }) => theme.colors.gray[400]};
+`;
+
+export const NoTasksTitle = styled.Text`
+  margin-top: 16px;
+  font-size: 14px;
+  line-height: 19.6px;
+
+  ${({ theme }) => css`
+    font-family: ${theme.fonts.primary[700]};
+    color: ${theme.colors.gray[300]};
+  `}
+`;
+
+export const NoTasksSubTitle = styled.Text`
+  font-size: 14px;
+  line-height: 19.6px;
+
+  ${({ theme }) => css`
+    font-family: ${theme.fonts.primary[400]};
+    color: ${theme.colors.gray[300]};
   `}
 `;
