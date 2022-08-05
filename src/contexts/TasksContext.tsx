@@ -1,4 +1,5 @@
-import { createContext, useCallback, useContext, useState } from "react";
+import { createContext, useCallback, useContext } from "react";
+import { useAsyncStorageState } from "~/hooks/useAsyncStorageState";
 
 export interface Task {
   id: string;
@@ -11,6 +12,7 @@ interface TasksContextData {
   createTask: (title: Task["title"]) => void;
   toggleTaskCompleted: (id: Task["id"]) => void;
   deleteTask: (id: Task["id"]) => void;
+  isInitialTasksLoading: boolean;
 }
 
 const TasksContext = createContext({} as TasksContextData);
@@ -24,7 +26,10 @@ interface TasksContextProviderProps {
 export const TasksContextProvider: React.FC<TasksContextProviderProps> = ({
   children,
 }) => {
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [tasks, setTasks, isInitialTasksLoading] = useAsyncStorageState<Task[]>(
+    "@todo-list:tasks-v1.0.0",
+    [],
+  );
 
   const createTask: TasksContextData["createTask"] = useCallback(title => {
     setTasks(tasks => [
@@ -66,6 +71,7 @@ export const TasksContextProvider: React.FC<TasksContextProviderProps> = ({
         createTask,
         toggleTaskCompleted,
         deleteTask,
+        isInitialTasksLoading,
       }}
     >
       {children}

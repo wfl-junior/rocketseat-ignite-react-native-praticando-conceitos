@@ -10,6 +10,15 @@ export const Content = styled.View`
   padding: 0 24px;
 `;
 
+export const Loading = styled.ActivityIndicator.attrs(({ theme }) => {
+  return {
+    color: theme.colors.purple.dark,
+    size: 48,
+  };
+})`
+  margin-top: 32px;
+`;
+
 export const Tasks = styled.View`
   flex: 1;
   margin-top: 32px;

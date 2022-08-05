@@ -10,6 +10,7 @@ import {
   Container,
   Content,
   CreatedTasksTitle,
+  Loading,
   NoTasks,
   NoTasksSubTitle,
   NoTasksTitle,
@@ -21,7 +22,7 @@ import {
 } from "./styles";
 
 export const Home: React.FC = () => {
-  const { tasks } = useTasksContext();
+  const { tasks, isInitialTasksLoading } = useTasksContext();
 
   const completedTasksAmount = useMemo(() => {
     return tasks.filter(task => task.completed).length;
@@ -34,44 +35,48 @@ export const Home: React.FC = () => {
       <Content>
         <CreateTaskBar />
 
-        <Tasks>
-          <TasksHeader>
-            <TasksHeaderGroup>
-              <CreatedTasksTitle>Criadas</CreatedTasksTitle>
-              <TasksHeaderBadge>
-                <TasksHeaderAmount>{tasks.length}</TasksHeaderAmount>
-              </TasksHeaderBadge>
-            </TasksHeaderGroup>
+        {isInitialTasksLoading ? (
+          <Loading />
+        ) : (
+          <Tasks>
+            <TasksHeader>
+              <TasksHeaderGroup>
+                <CreatedTasksTitle>Criadas</CreatedTasksTitle>
+                <TasksHeaderBadge>
+                  <TasksHeaderAmount>{tasks.length}</TasksHeaderAmount>
+                </TasksHeaderBadge>
+              </TasksHeaderGroup>
 
-            <TasksHeaderGroup>
-              <CompletedTasksTitle>Concluídas</CompletedTasksTitle>
-              <TasksHeaderBadge>
-                <TasksHeaderAmount>{completedTasksAmount}</TasksHeaderAmount>
-              </TasksHeaderBadge>
-            </TasksHeaderGroup>
-          </TasksHeader>
+              <TasksHeaderGroup>
+                <CompletedTasksTitle>Concluídas</CompletedTasksTitle>
+                <TasksHeaderBadge>
+                  <TasksHeaderAmount>{completedTasksAmount}</TasksHeaderAmount>
+                </TasksHeaderBadge>
+              </TasksHeaderGroup>
+            </TasksHeader>
 
-          <FlatList
-            data={tasks}
-            keyExtractor={task => task.id}
-            renderItem={({ item }) => <TaskItem task={item} />}
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ paddingBottom: 12 }}
-            ListEmptyComponent={() => (
-              <NoTasks>
-                <Image source={clipboard} />
+            <FlatList
+              data={tasks}
+              keyExtractor={task => task.id}
+              renderItem={({ item }) => <TaskItem task={item} />}
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={{ paddingBottom: 12 }}
+              ListEmptyComponent={() => (
+                <NoTasks>
+                  <Image source={clipboard} />
 
-                <NoTasksTitle>
-                  Você ainda não tem tarefas cadastradas
-                </NoTasksTitle>
+                  <NoTasksTitle>
+                    Você ainda não tem tarefas cadastradas
+                  </NoTasksTitle>
 
-                <NoTasksSubTitle>
-                  Crie tarefas e organize seus itens a fazer
-                </NoTasksSubTitle>
-              </NoTasks>
-            )}
-          />
-        </Tasks>
+                  <NoTasksSubTitle>
+                    Crie tarefas e organize seus itens a fazer
+                  </NoTasksSubTitle>
+                </NoTasks>
+              )}
+            />
+          </Tasks>
+        )}
       </Content>
     </Container>
   );
