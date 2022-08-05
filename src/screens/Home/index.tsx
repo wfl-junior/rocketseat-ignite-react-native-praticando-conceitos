@@ -1,7 +1,9 @@
+import { Fragment } from "react";
 import { Image } from "react-native";
 import clipboard from "~/assets/clipboard.png";
 import { Header } from "~/components/Header";
 import { SearchBar } from "~/components/SearchBar";
+import { TaskItem } from "~/components/TaskItem";
 import {
   CompletedTasksTitle,
   Container,
@@ -16,6 +18,8 @@ import {
   TasksHeaderBadge,
   TasksHeaderGroup,
 } from "./styles";
+
+const tasks = [""];
 
 export const Home: React.FC = () => (
   <Container>
@@ -41,15 +45,29 @@ export const Home: React.FC = () => (
           </TasksHeaderGroup>
         </TasksHeader>
 
-        <NoTasks>
-          <Image source={clipboard} />
+        {tasks.length ? (
+          <Fragment>
+            <TaskItem
+              completed={false}
+              title="Integer urna interdum massa libero auctor neque turpis turpis semper."
+            />
 
-          <NoTasksTitle>Você ainda não tem tarefas cadastradas</NoTasksTitle>
+            <TaskItem
+              completed={true}
+              title="Integer urna interdum massa libero auctor neque turpis turpis semper."
+            />
+          </Fragment>
+        ) : (
+          <NoTasks>
+            <Image source={clipboard} />
 
-          <NoTasksSubTitle>
-            Crie tarefas e organize seus itens a fazer
-          </NoTasksSubTitle>
-        </NoTasks>
+            <NoTasksTitle>Você ainda não tem tarefas cadastradas</NoTasksTitle>
+
+            <NoTasksSubTitle>
+              Crie tarefas e organize seus itens a fazer
+            </NoTasksSubTitle>
+          </NoTasks>
+        )}
       </Tasks>
     </Content>
   </Container>

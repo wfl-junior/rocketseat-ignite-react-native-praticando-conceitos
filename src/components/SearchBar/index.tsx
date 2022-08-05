@@ -1,5 +1,4 @@
-import { Image } from "react-native";
-import plus from "~/assets/plus.png";
+import { PlusCircle } from "phosphor-react-native";
 import { AddButton, Container, Input } from "./styles";
 
 export const SearchBar: React.FC = () => {
@@ -15,7 +14,7 @@ export const SearchBar: React.FC = () => {
       />
 
       <AddButton activeOpacity={0.5} onPress={handleSubmit}>
-        <Image source={plus} />
+        <PlusCircle size={16} color="white" />
       </AddButton>
     </Container>
   );

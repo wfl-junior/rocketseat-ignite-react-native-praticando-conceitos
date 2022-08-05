@@ -34,4 +34,3 @@ export const AddButton = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
 `;
-
